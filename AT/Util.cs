@@ -145,5 +145,31 @@ namespace AT {
             Console.WriteLine("3. Listar todas as contas");
             Console.Write("Escolha uma opção: ");
         }
+
+        public static int ValidaInt(string numero)
+        {
+            int resultado;
+            bool validaNumero = int.TryParse(numero, out resultado);
+            while (!validaNumero)
+            {
+                Console.WriteLine("Digite um valor numérico.");
+                numero = Console.ReadLine();
+                validaNumero = int.TryParse(numero, out resultado);
+            }
+            return resultado;
+        }
+
+        public static double ValidaDouble(string saldo)
+        {
+            double resultado;
+            bool validaDouble = double.TryParse(saldo, out resultado);
+            while (!validaDouble)
+            {
+                Console.WriteLine("Digite um valor numérico.");
+                saldo = Console.ReadLine();
+                validaDouble = double.TryParse(saldo, out resultado);
+            }
+            return resultado;
+        }
     }
 }

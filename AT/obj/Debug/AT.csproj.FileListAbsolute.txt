@@ -45,3 +45,11 @@ C:\Users\pedro\source\repos\GabrielSa\ProjetoCSharp\AT\obj\Debug\AT.csprojAssemb
 C:\Users\pedro\source\repos\GabrielSa\ProjetoCSharp\AT\obj\Debug\AT.csproj.CoreCompileInputs.cache
 C:\Users\pedro\source\repos\GabrielSa\ProjetoCSharp\AT\obj\Debug\AT.exe
 C:\Users\pedro\source\repos\GabrielSa\ProjetoCSharp\AT\obj\Debug\AT.pdb
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\bin\Debug\AT.exe.config
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\bin\Debug\AT.exe
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\bin\Debug\AT.pdb
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\obj\Debug\AT.csproj.AssemblyReference.cache
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\obj\Debug\AT.csproj.SuggestedBindingRedirects.cache
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\obj\Debug\AT.csproj.CoreCompileInputs.cache
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\obj\Debug\AT.exe
+C:\Users\pedro\OneDrive\Documentos\GitHub\ProjetoCSharp\AT\obj\Debug\AT.pdb
