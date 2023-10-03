@@ -33,9 +33,14 @@ namespace AT {
             do
             {
                 Console.Write("Digite o número da conta (Id): ");
-                id = int.Parse(Console.ReadLine());
 
-                if (id <= 0)
+                var valido = int.TryParse(Console.ReadLine(), out id);
+
+                if (!valido)
+                {
+                    Console.WriteLine("Digite um valor válido.");
+                }
+                else if (id <= 0)
                 {
                     Console.WriteLine("O número da conta deve ser um inteiro maior que zero.");
                 }
@@ -43,6 +48,7 @@ namespace AT {
                 {
                     Console.WriteLine("Uma conta com este número já existe. Por favor, escolha outro número de conta.");
                 }
+
             } while (id <= 0 || contas.Exists(c => c.Id == id));
             return id;
         }
