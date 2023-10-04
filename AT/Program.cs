@@ -7,7 +7,6 @@ using static AT.Arquivo;
 
 namespace AT {
     public class Program {
-        static List<Conta> contas = new List<Conta>();
 
         static void Main(string[] args) {
 

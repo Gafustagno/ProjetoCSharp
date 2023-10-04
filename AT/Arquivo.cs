@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace AT {
     internal class Arquivo {
-        static List<Conta> contas = new List<Conta>();
 
         public static void CarregarDadosDoArquivo()
         {
@@ -29,7 +28,7 @@ namespace AT {
                             double saldo = double.Parse(partes[2]);
 
                             Conta novaConta = new Conta(id, nome, saldo);
-                            contas.Add(novaConta);
+                            ContaCrud.contas.Add(novaConta);
 
                         }
                     }
@@ -40,7 +39,7 @@ namespace AT {
         {
             using (StreamWriter writer = new StreamWriter("contas.csv"))
             {
-                foreach (var conta in contas)
+                foreach (var conta in ContaCrud.contas)
                 {
                     string linha = $"{conta.Id},{conta.Nome},{conta.Saldo}";
                     writer.WriteLine(linha);

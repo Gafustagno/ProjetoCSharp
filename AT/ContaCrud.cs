@@ -8,7 +8,7 @@ using static AT.Arquivo;
 
 namespace AT {
     internal class ContaCrud {
-        static List<Conta> contas = new List<Conta>();
+        public static List<Conta> contas = new List<Conta>();
 
         public static void IncluirConta()
         {
@@ -126,7 +126,7 @@ namespace AT {
             }
 
             MenuRelatoriosGerenciais();
-            int opcao = int.Parse(Console.ReadLine());
+            int opcao = Util.ValidaInt(Console.ReadLine());
 
             switch (opcao)
             {
