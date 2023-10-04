@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 namespace AT {
     internal class Arquivo {
 
-        public static void CarregarDadosDoArquivo()
+        public static List<Conta> CarregarDadosDoArquivo()
         {
+            List<Conta> contas = new List<Conta>();
 
             if (File.Exists("contas.csv"))
             {
-
                 using (StreamReader reader = new StreamReader("contas.csv"))
                 {
                     while (!reader.EndOfStream)
@@ -28,18 +28,20 @@ namespace AT {
                             double saldo = double.Parse(partes[2]);
 
                             Conta novaConta = new Conta(id, nome, saldo);
-                            ContaCrud.contas.Add(novaConta);
+                            contas.Add(novaConta);
 
                         }
                     }
                 }
             }
+
+            return contas;
         }
-        public static void SalvarDadosNoArquivo()
+        public static void SalvarDadosNoArquivo(List<Conta> contas)
         {
             using (StreamWriter writer = new StreamWriter("contas.csv"))
             {
-                foreach (var conta in ContaCrud.contas)
+                foreach (var conta in contas)
                 {
                     string linha = $"{conta.Id},{conta.Nome},{conta.Saldo}";
                     writer.WriteLine(linha);

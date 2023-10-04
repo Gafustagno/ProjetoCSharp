@@ -10,7 +10,7 @@ namespace AT {
 
         static void Main(string[] args) {
 
-            CarregarDadosDoArquivo();
+            var contas = CarregarDadosDoArquivo();
 
             bool sair = false;
 
@@ -20,19 +20,19 @@ namespace AT {
                 switch (opcao) {
                     case 1:
                         Console.WriteLine("Inclusão de conta selecionada");
-                        IncluirConta();
+                        IncluirConta(ref contas);
                         break;
                     case 2:
                         Console.WriteLine("Alteração de saldo selecionada");
-                        AlterarSaldo();
+                        AlterarSaldo(ref contas);
                         break;
                     case 3:
                         Console.WriteLine("Exclusão de conta selecionada");
-                        ExcluirConta();
+                        ExcluirConta(ref contas);
                         break;
                     case 4:
                         Console.WriteLine("Relatórios gerenciais selecionados");
-                        ExibirRelatoriosGerenciais(); 
+                        ExibirRelatoriosGerenciais(contas); 
                         break;
                     case 5:
                         Console.WriteLine("Saindo do programa");
@@ -43,7 +43,7 @@ namespace AT {
                         break;
                 }
             }
-            SalvarDadosNoArquivo();
+            SalvarDadosNoArquivo(contas);
         }
 
         static int ExibirMenu() {

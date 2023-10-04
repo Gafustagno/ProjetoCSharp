@@ -8,9 +8,8 @@ using static AT.Arquivo;
 
 namespace AT {
     internal class ContaCrud {
-        public static List<Conta> contas = new List<Conta>();
 
-        public static void IncluirConta()
+        public static void IncluirConta(ref List<Conta> contas)
         {
 
             int id = ContaValida();
@@ -22,9 +21,9 @@ namespace AT {
             Console.WriteLine("Conta adicionada com sucesso!");
         }
 
-        public static void AlterarSaldo()
+        public static void AlterarSaldo(ref List<Conta> contas)
         {
-            if (!VerificarLista())
+            if (!VerificarLista(contas))
             {
                 return;
             }
@@ -82,9 +81,9 @@ namespace AT {
             }
         }
 
-        public static void ExcluirConta()
+        public static void ExcluirConta(ref List<Conta> contas)
         {
-            if (!VerificarLista())
+            if (!VerificarLista(contas))
             {
                 return;
             }
@@ -117,10 +116,10 @@ namespace AT {
             } while (conta == null || conta.Saldo != 0);
         }
 
-        public static void ExibirRelatoriosGerenciais()
+        public static void ExibirRelatoriosGerenciais(List<Conta> contas)
         {
 
-            if (!VerificarLista())
+            if (!VerificarLista(contas))
             {
                 return;
             }
@@ -131,13 +130,13 @@ namespace AT {
             switch (opcao)
             {
                 case 1:
-                    ListarClientesComSaldoNegativo();
+                    ListarClientesComSaldoNegativo(contas);
                     break;
                 case 2:
-                    ListarClientesComSaldoAcimaDeValor();
+                    ListarClientesComSaldoAcimaDeValor(contas);
                     break;
                 case 3:
-                    ListarTodasContas();
+                    ListarTodasContas(contas);
                     break;
                 default:
                     Console.WriteLine("Opção inválida.");
@@ -145,7 +144,7 @@ namespace AT {
             }
         }
 
-        static void ListarClientesComSaldoNegativo()
+        static void ListarClientesComSaldoNegativo(List<Conta> contas)
         {
             Console.WriteLine("\nClientes com saldo negativo:");
             foreach (var conta in contas)
@@ -157,7 +156,7 @@ namespace AT {
             }
         }
 
-        static void ListarClientesComSaldoAcimaDeValor()
+        static void ListarClientesComSaldoAcimaDeValor(List<Conta> contas)
         {
             Console.Write("\nDigite o valor mínimo de saldo: ");
             if (double.TryParse(Console.ReadLine(), out double valorMinimo))
@@ -177,7 +176,7 @@ namespace AT {
             }
         }
 
-        static void ListarTodasContas()
+        static void ListarTodasContas(List<Conta> contas)
         {
             Console.WriteLine("\nTodas as contas:");
             foreach (var conta in contas)
@@ -186,7 +185,7 @@ namespace AT {
             }
         }
 
-        static bool VerificarLista()
+        static bool VerificarLista(List<Conta> contas)
         {
             if (contas.Count == 0)
             {
