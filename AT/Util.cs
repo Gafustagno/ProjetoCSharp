@@ -9,13 +9,20 @@ namespace AT {
     internal class Util {
         static List<Conta> contas = new List<Conta>();
 
+        public static bool VerificarID(List<Conta> contas, int id)
+        {
+            return contas.Exists(c => c.Id == id);
+        }
+
         public static double SaldoValido()
         {
             double saldo = -1;
-            while (saldo < 0)
+            while (true)
             {
-                Console.Write("Digite o saldo inicial da conta (Saldo): ");
-                if (double.TryParse(Console.ReadLine(), out saldo) && saldo >= 0)
+                Console.Write("Digite o saldo inicial da conta: ");
+                saldo = ValidaDouble(Console.ReadLine());
+
+                if (saldo >= 0)
                 {
                     break;
                 }
@@ -27,33 +34,29 @@ namespace AT {
             return saldo;
         }
 
-        public static int ContaValida()
+        public static int ContaValida(List<Conta> contas)
         {
             int id;
             do
             {
                 Console.Write("Digite o número da conta (Id): ");
+                id = ValidaInt(Console.ReadLine());
 
-                var valido = int.TryParse(Console.ReadLine(), out id);
-
-                if (!valido)
-                {
-                    Console.WriteLine("Digite um valor válido.");
-                }
-                else if (id <= 0)
+                if (id <= 0)
                 {
                     Console.WriteLine("O número da conta deve ser um inteiro maior que zero.");
                 }
-                else if (contas.Exists(c => c.Id == id))
+                else if (VerificarID(contas, id))
                 {
                     Console.WriteLine("Uma conta com este número já existe. Por favor, escolha outro número de conta.");
                 }
 
-            } while (id <= 0 || contas.Exists(c => c.Id == id));
+            } while (id <= 0 || VerificarID(contas, id));
+
             return id;
         }
 
-        public static string NomeValido()
+        public static string NomeValido() 
         {
             string nome = "";
             while (string.IsNullOrEmpty(nome) || nome.Split(' ').Length < 2)
@@ -78,44 +81,39 @@ namespace AT {
             return true;
         }
 
-        public static void RealizarDeposito(Conta conta)
-        {
+        public static void RealizarDeposito(Conta conta) {
             double valor;
 
-            do
-            {
+            do {
                 Console.Write("Digite o valor a ser depositado: ");
 
-                if (double.TryParse(Console.ReadLine(), out valor) && valor > 0)
-                {
+                valor = ValidaDouble(Console.ReadLine());
+
+                if (valor > 0) {
                     conta.Depositar(valor);
                     Console.WriteLine("Depósito realizado com sucesso!");
-                    Console.WriteLine(" ");
                     break;
                 }
-                else
-                {
+                else {
                     Console.WriteLine("O valor de depósito deve ser um número real maior que zero. Tente novamente.");
                 }
             } while (true);
         }
 
-        public static void RealizarSaque(Conta conta)
-        {
+        public static void RealizarSaque(Conta conta) {
             double valor;
 
-            do
-            {
+            do {
                 Console.Write("Digite o valor a ser sacado: ");
 
-                if (double.TryParse(Console.ReadLine(), out valor) && valor > 0)
-                {
+                valor = ValidaDouble(Console.ReadLine());
+
+                if (valor > 0) {
                     conta.Sacar(valor);
                     Console.WriteLine("Saque realizado com sucesso!");
                     break;
                 }
-                else
-                {
+                else {
                     Console.WriteLine("O valor de saque deve ser um número real maior que zero. Tente novamente.");
                 }
             } while (true);
@@ -123,8 +121,7 @@ namespace AT {
 
         public static bool VerificarCriteriosExclusao(Conta conta)
         {
-            if (conta == null)
-            {
+            if (conta == null) {
                 Console.WriteLine("Conta não encontrada. Tente novamente.");
                 return false;
             }
@@ -137,8 +134,7 @@ namespace AT {
             return true;
         }
 
-        public static void MenuRelatoriosGerenciais()
-        {
+        public static void MenuRelatoriosGerenciais() {
             Console.WriteLine("\nOpções de Relatórios Gerenciais:");
             Console.WriteLine("1. Listar clientes com saldo negativo");
             Console.WriteLine("2. Listar clientes com saldo acima de um determinado valor");
@@ -146,12 +142,10 @@ namespace AT {
             Console.Write("Escolha uma opção: ");
         }
 
-        public static int ValidaInt(string numero)
-        {
+        public static int ValidaInt(string numero) {
             int resultado;
             bool validaNumero = int.TryParse(numero, out resultado);
-            while (!validaNumero)
-            {
+            while (!validaNumero) {
                 Console.WriteLine("Digite um valor numérico.");
                 numero = Console.ReadLine();
                 validaNumero = int.TryParse(numero, out resultado);
@@ -159,12 +153,10 @@ namespace AT {
             return resultado;
         }
 
-        public static double ValidaDouble(string saldo)
-        {
+        public static double ValidaDouble(string saldo) {
             double resultado;
             bool validaDouble = double.TryParse(saldo, out resultado);
-            while (!validaDouble)
-            {
+            while (!validaDouble) {
                 Console.WriteLine("Digite um valor numérico.");
                 saldo = Console.ReadLine();
                 validaDouble = double.TryParse(saldo, out resultado);

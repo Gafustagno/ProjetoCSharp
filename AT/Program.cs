@@ -55,8 +55,7 @@ namespace AT {
             Console.WriteLine("4. Relatórios Gerenciais");
             Console.WriteLine("5. Sair do Programa");
 
-            int opcao = Util.ValidaInt(Console.ReadLine());
-            return opcao;
+            return Util.ValidaInt(Console.ReadLine());
         }
 
     }

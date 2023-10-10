@@ -9,10 +9,15 @@ using static AT.Arquivo;
 namespace AT {
     internal class ContaCrud {
 
-        public static void IncluirConta(ref List<Conta> contas)
-        {
+        public static void IncluirConta(ref List<Conta> contas) {
+            int id;
+            do             {
+                id = ContaValida(contas);
+                if (VerificarID(contas, id)) {
+                    Console.WriteLine("Uma conta com este número já existe. Tente novamente.");
+                }
+            } while (VerificarID(contas, id));
 
-            int id = ContaValida();
             string nome = NomeValido();
             double saldo = SaldoValido();
 
@@ -33,7 +38,7 @@ namespace AT {
             do
             {
                 Console.Write("Digite o número da conta (Id): ");
-                id = int.Parse(Console.ReadLine());
+                id = ValidaInt(Console.ReadLine());
                 conta = contas.Find(c => c.Id == id);
 
                 if (conta == null)
@@ -48,70 +53,53 @@ namespace AT {
             }
         }
 
-        static void RealizarOperacao(Conta conta)
-        {
+        static void RealizarOperacao(Conta conta) {
             int opcao;
-            while (true)
-            {
+            while (true) {
                 Console.WriteLine("Selecione a operação:");
                 Console.WriteLine("1. Depósito");
                 Console.WriteLine("2. Saque");
 
-                if (int.TryParse(Console.ReadLine(), out opcao))
-                {
-                    if (opcao == 1)
-                    {
-                        RealizarDeposito(conta);
-                        break;
-                    }
-                    else if (opcao == 2)
-                    {
-                        RealizarSaque(conta);
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Opção inválida. Tente novamente.");
-                    }
+                opcao = ValidaInt(Console.ReadLine());
+
+                if (opcao == 1) {
+                    RealizarDeposito(conta);
+                    break;
                 }
-                else
-                {
+                else if (opcao == 2) {
+                    RealizarSaque(conta);
+                    break;
+                }
+                else {
                     Console.WriteLine("Opção inválida. Tente novamente.");
                 }
             }
         }
 
-        public static void ExcluirConta(ref List<Conta> contas)
-        {
-            if (!VerificarLista(contas))
-            {
+        public static void ExcluirConta(ref List<Conta> contas) {
+            if (!VerificarLista(contas)) {
                 return;
             }
 
             int id;
             Conta conta = null;
 
-            do
-            {
+            do {
                 Console.Write("Digite o número da conta (Id) a ser excluída: ");
-                if (int.TryParse(Console.ReadLine(), out id))
-                {
-                    conta = contas.Find(c => c.Id == id);
+                id = ValidaInt(Console.ReadLine());
 
-                    if (VerificarCriteriosExclusao(conta))
-                    {
-                        contas.Remove(conta);
-                        Console.WriteLine("Conta excluída com sucesso!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Operação de exclusão cancelada.");
-                        return;
-                    }
+                conta = contas.Find(c => c.Id == id);
+
+                if (conta != null && VerificarCriteriosExclusao(conta)) {
+                    contas.Remove(conta);
+                    Console.WriteLine("Conta excluída com sucesso!");
                 }
-                else
-                {
-                    Console.WriteLine("Valor inserido não é válido. Tente novamente.");
+                else if (conta != null) {
+                    Console.WriteLine("Operação de exclusão cancelada.");
+                    return;
+                }
+                else {
+                    Console.WriteLine("Conta não encontrada. Tente novamente.");
                 }
             } while (conta == null || conta.Saldo != 0);
         }
@@ -125,7 +113,7 @@ namespace AT {
             }
 
             MenuRelatoriosGerenciais();
-            int opcao = Util.ValidaInt(Console.ReadLine());
+            int opcao = ValidaInt(Console.ReadLine());
 
             switch (opcao)
             {
@@ -144,35 +132,26 @@ namespace AT {
             }
         }
 
-        static void ListarClientesComSaldoNegativo(List<Conta> contas)
-        {
+        static void ListarClientesComSaldoNegativo(List<Conta> contas) {
             Console.WriteLine("\nClientes com saldo negativo:");
-            foreach (var conta in contas)
-            {
-                if (conta.Saldo < 0)
-                {
-                    Console.WriteLine($"Conta ID: {conta.Id}, Nome: {conta.Nome}, Saldo: {conta.Saldo}");
+            foreach (var conta in contas) {
+                if (conta.Saldo < 0) {
+                    Console.WriteLine(conta);
                 }
             }
         }
 
-        static void ListarClientesComSaldoAcimaDeValor(List<Conta> contas)
-        {
+        static void ListarClientesComSaldoAcimaDeValor(List<Conta> contas) {
+            double valorMinimo;
+
             Console.Write("\nDigite o valor mínimo de saldo: ");
-            if (double.TryParse(Console.ReadLine(), out double valorMinimo))
-            {
-                Console.WriteLine($"Clientes com saldo acima de {valorMinimo}:");
-                foreach (var conta in contas)
-                {
-                    if (conta.Saldo > valorMinimo)
-                    {
-                        Console.WriteLine($"Conta ID: {conta.Id}, Nome: {conta.Nome}, Saldo: {conta.Saldo}");
-                    }
+            valorMinimo = ValidaDouble(Console.ReadLine());
+
+            Console.WriteLine($"Clientes com saldo acima de {valorMinimo}:");
+            foreach (var conta in contas) {
+                if (conta.Saldo > valorMinimo) {
+                    Console.WriteLine(conta);
                 }
-            }
-            else
-            {
-                Console.WriteLine("Valor inválido.");
             }
         }
 
